@@ -5,7 +5,7 @@ job("${job_base_name} Branch Auto-Configurer") {
   	cron("*/5 * * * *")
   }
   
-  /* Call another build (dsl_prototype.xml) with these parameters */
+  /* Call another build (pipeline-factory.xml) with these parameters */
   steps {
     downstreamParameterized {
       
