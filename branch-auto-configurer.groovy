@@ -1,4 +1,4 @@
-job("${job_base_name} Branch Auto-Configurer") {
+job("${project} Branch Auto-Configurer") {
   
   /* Do it every 5 minutes */
   triggers {
