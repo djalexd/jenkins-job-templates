@@ -14,7 +14,7 @@ job("${job_base_name} Branch Auto-Configurer") {
                      failure         : 'FAILURE',
                      unstable        : 'UNSTABLE']) {
                 predefinedProp('git_scm_url', "${git_scm_url}")
-                predefinedProp('job_base_name', "${job_base_name}")
+                predefinedProp('project', "${project}")
             }
     }
   }
