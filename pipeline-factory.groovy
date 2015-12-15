@@ -11,7 +11,7 @@ branches.each {
             remote {
               url "${git_scm_url}"
             }
-            branch it.name
+            branch "${it.name}"
             createTag false
             clean true
           }
@@ -27,7 +27,7 @@ branches.each {
               remote {
                  url "${git_scm_url}"
               }
-              branch it.name
+              branch "${it.name}
               createTag false
               clean true
            }
