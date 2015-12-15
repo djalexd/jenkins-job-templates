@@ -3,13 +3,31 @@ def branchApi = new URL("https://api.github.com/repos/${project}/branches")
 def branches = new groovy.json.JsonSlurper().parse(branchApi.newReader())
 branches.each {
     def branchName = it.name
-    job("${project} - start - ${branchName}".replaceAll('/', '-')) {
+    /* Configure all job names here for easier referencing */
+    List<String> jobNames = [
+        "${project} - start - ${branchName}",
+        "${project} - unit-tests - ${branchName}",
+        "${project} - integration-tests - ${branchName}",
+        "${project} - done - ${branchName}"
+    ] as String[]
+    
+    def sanitizedJobNames = jobNames.collect { it.replaceAll('/', '-') }
+    
+    job(sanitizedJobNames[0]) {
         /* Do nothing, this is just a placeholder */
+        deliveryPipelineConfiguration("start")
+        
+        trigger(sanitizedJobNames[1]) {
+            parameters {
+                currentBuild()
+            }
+        }
     }
     
-    job("${project} - unit-tests - ${branchName}".replaceAll('/','-')) {
+    job(sanitizedJobNames[1]) {
         /* the swarm label is a future extension */
         /*label("swarm")*/
+        deliveryPipelineConfiguration("build", "unit-tests")
         scm {
           git {
             remote {
@@ -23,9 +41,16 @@ branches.each {
         steps {
             maven("clean test")
         }
+        trigger(sanitizedJobNames[2]) {
+            parameters {
+                currentBuild()
+            }
+        }
+
     }
     
-    job("${project} - Integration Tests - ${it.name}".replaceAll('/','-')) {
+    job(sanitizedJobNames[2]) {
+        deliveryPipelineConfiguration("build", "integration-tests")
         scm {
            git {
               remote {
@@ -39,5 +64,14 @@ branches.each {
         steps {
            maven("clean verify")
         }
+        trigger(sanitizedJobNames[3]) {
+            parameters {
+                currentBuild()
+            }
+        }
+    }
+    
+    job(sanitizedJobNames[3]) {
+        deliveryPipelineConfiguration("done")
     }
 }
