@@ -17,10 +17,12 @@ branches.each {
         /* Do nothing, this is just a placeholder */
         deliveryPipelineConfiguration("start")
         
-        downstreamParameterized {
-            trigger(sanitizedJobNames.get(1)) {
-                parameters {
-                    currentBuild()
+        steps {
+            downstreamParameterized {
+                trigger(sanitizedJobNames.get(1)) {
+                    parameters {
+                        currentBuild()
+                    }
                 }
             }
         }
@@ -42,15 +44,14 @@ branches.each {
         }
         steps {
             maven("clean test")
-        }
-        downstreamParameterized {
-            trigger(sanitizedJobNames.get(2)) {
-                parameters {
-                    currentBuild()
+            downstreamParameterized {
+                trigger(sanitizedJobNames.get(2)) {
+                    parameters {
+                        currentBuild()
+                    }
                 }
             }
         }
-
     }
     
     job(sanitizedJobNames.get(2)) {
@@ -66,12 +67,12 @@ branches.each {
            }
         }
         steps {
-           maven("clean verify")
-        }
-        downstreamParameterized {
-            trigger(sanitizedJobNames.get(3)) {
-                parameters {
-                    currentBuild()
+            maven("clean verify")
+            downstreamParameterized {
+                trigger(sanitizedJobNames.get(3)) {
+                    parameters {
+                        currentBuild()
+                    }
                 }
             }
         }
