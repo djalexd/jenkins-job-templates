@@ -17,9 +17,11 @@ branches.each {
         /* Do nothing, this is just a placeholder */
         deliveryPipelineConfiguration("start")
         
-        trigger(sanitizedJobNames.get(1)) {
-            parameters {
-                currentBuild()
+        downstreamParameterized {
+            trigger(sanitizedJobNames.get(1)) {
+                parameters {
+                    currentBuild()
+                }
             }
         }
     }
@@ -41,9 +43,11 @@ branches.each {
         steps {
             maven("clean test")
         }
-        trigger(sanitizedJobNames.get(2)) {
-            parameters {
-                currentBuild()
+        downstreamParameterized {
+            trigger(sanitizedJobNames.get(2)) {
+                parameters {
+                    currentBuild()
+                }
             }
         }
 
@@ -64,9 +68,11 @@ branches.each {
         steps {
            maven("clean verify")
         }
-        trigger(sanitizedJobNames.get(3)) {
-            parameters {
-                currentBuild()
+        downstreamParameterized {
+            trigger(sanitizedJobNames.get(3)) {
+                parameters {
+                    currentBuild()
+                }
             }
         }
     }
