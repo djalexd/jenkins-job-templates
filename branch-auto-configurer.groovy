@@ -1,4 +1,4 @@
-job("${project} Branch Auto-Configurer") {
+job("${project} Branch Auto-Configurer".replaceAll('/', '-')) {
   
   /* Do it every 5 minutes */
   triggers {
