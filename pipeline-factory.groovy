@@ -13,18 +13,18 @@ branches.each {
     
     def sanitizedJobNames = jobNames.collect { it.replaceAll('/', '-') }
     
-    job(sanitizedJobNames[0]) {
+    job(sanitizedJobNames.get(0)) {
         /* Do nothing, this is just a placeholder */
         deliveryPipelineConfiguration("start")
         
-        trigger(sanitizedJobNames[1]) {
+        trigger(sanitizedJobNames.get(1)) {
             parameters {
                 currentBuild()
             }
         }
     }
     
-    job(sanitizedJobNames[1]) {
+    job(sanitizedJobNames.get(1)) {
         /* the swarm label is a future extension */
         /*label("swarm")*/
         deliveryPipelineConfiguration("build", "unit-tests")
@@ -41,7 +41,7 @@ branches.each {
         steps {
             maven("clean test")
         }
-        trigger(sanitizedJobNames[2]) {
+        trigger(sanitizedJobNames.get(2)) {
             parameters {
                 currentBuild()
             }
@@ -49,7 +49,7 @@ branches.each {
 
     }
     
-    job(sanitizedJobNames[2]) {
+    job(sanitizedJobNames.get(2)) {
         deliveryPipelineConfiguration("build", "integration-tests")
         scm {
            git {
@@ -64,14 +64,14 @@ branches.each {
         steps {
            maven("clean verify")
         }
-        trigger(sanitizedJobNames[3]) {
+        trigger(sanitizedJobNames.get(3)) {
             parameters {
                 currentBuild()
             }
         }
     }
     
-    job(sanitizedJobNames[3]) {
+    job(sanitizedJobNames.get(3)) {
         deliveryPipelineConfiguration("done")
     }
 }
