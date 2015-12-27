@@ -30,7 +30,7 @@ branches.each {
         "${project} - start - ${branchName}",
         "${project} - unit-tests - ${branchName}",
         "${project} - integration-tests - ${branchName}",
-        "${project} - Sonar analysis - ${branchName}"
+        "${project} - Sonar analysis - ${branchName}",
         "${project} - done - ${branchName}"
     ] as String[]
     
