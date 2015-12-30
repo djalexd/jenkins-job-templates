@@ -94,10 +94,19 @@ branches.each {
                 clean true
             }
         }
+        
+        publishers {
+            sonar {
+                branch(branchName)
+                overrideTriggers {
+                    skipIfEnvironmentVariable('SKIP_SONAR')
+                }
+            }
+        }
 
         steps {
             maven("clean install -DskipTests")
-            maven("sonar:sonar")
+            /*maven("sonar:sonar")*/
             downstreamParameterized {
                 trigger(sanitizedJobNames.get(4)) {
                     parameters {
