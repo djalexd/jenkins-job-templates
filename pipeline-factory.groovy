@@ -122,7 +122,7 @@ branches.each {
         deliveryPipelineConfiguration("done")
     }
 
-    deliveryPipelineView("${project}-${branch}-view") {
+    deliveryPipelineView("${project}-${branchName}-view") {
         pipelineInstances(5)
         showAggregatedPipeline()
         columns(2)
