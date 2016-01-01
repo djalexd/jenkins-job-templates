@@ -6,6 +6,10 @@ def branchApi = new URL("https://api.github.com/repos/${gitHutProjectName}/branc
 def branches = new groovy.json.JsonSlurper().parse(branchApi.newReader())
 branches.each {
     def branchName = it.name
+
+    folder("${project}/${branchName}") {
+        /* Folder created before jobs */
+    }
     /* Configure all job names here for easier referencing */
     List<String> jobNames = [
         "${project}/${branchName}/start",
