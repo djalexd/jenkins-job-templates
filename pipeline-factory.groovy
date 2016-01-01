@@ -7,6 +7,10 @@ def branches = new groovy.json.JsonSlurper().parse(branchApi.newReader())
 branches.each {
     def branchName = it.name
 
+    folder("${project}") {
+        /* Folder created before jobs */
+    }
+
     folder("${project}/${branchName}") {
         /* Folder created before jobs */
     }
